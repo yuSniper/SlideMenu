@@ -1,0 +1,39 @@
+下拉刷新-------
+	1.addHeaderView必须在setAdapter之前调用
+	2.将paddingTop设置一个headerView高度的负值去隐藏它
+	
+	getHeight()和getMeasuredHeight()的区别：
+	getMeasuredHeight():获取测量完的高度，只要在onMeasure方法执行完，就可以用
+	                    它获取到宽高，在自定义控件内部多使用这个
+						使用view.measure(0,0)方法可以主动通知系统去测量，然后就
+						可以直接使用它获取宽高
+	getHeight()：必须在onLayout方法执行完后，才能获得宽高
+				view.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+					@Override
+					public void onGlobalLayout() {
+					headerView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+					int headerViewHeight = headerView.getHeight();
+					//直接可以获取宽高
+			}
+		});
+	3.setSelection(position);将对应位置的item放置到屏幕顶端
+	
+侧滑菜单---
+github-SlidingMenu
+	1.在ViewGroup中，让自己内容移动有以下几个方法：
+	layout(l,t,r,b);
+	offsetTopAndBottom(offset)和offsetLeftAndRight(offset);
+	scrollTo和scrollBy方法;
+	注意：滚动的并不是viewgroup内容本身，而是它的矩形边框
+		  它是瞬间移动，
+	
+	2.在自定义ViewGroup中一般不需要去实现onMeasure,
+	  我们去实现系统已有的ViewGroup,比如FrameLayout,
+	  它会帮我们区实现onMeasure方法
+
+
+	3.让view在一段时间内移动到某个位置
+	 a.使用自定义动画(让view在一段时间内做某件事)
+	   
+	 b.使用Scroller(模拟一个执行流程，)
+
